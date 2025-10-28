@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "58300775581",
+    "project_id": "yojana-seva",
+    "storage_bucket": "yojana-seva.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:58300775581:android:8f0760f5a498d0ef052874",
+        "android_client_info": {
+          "package_name": "com.example.yojana_seva"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVSsuAs5ktx5irh0nMq2yrfbWyzUiSsFw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
