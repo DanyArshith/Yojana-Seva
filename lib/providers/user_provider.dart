@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:yojana_seva/models/user_data.dart';
 
 class UserProvider with ChangeNotifier {
@@ -10,10 +11,11 @@ class UserProvider with ChangeNotifier {
 
   Future<void> createUser(UserData userData) async {
     try {
-      await _firestore
-          .collection('users')
-          .doc(userData.uid)
-          .set(userData.toMap());
+      final String? uid = FirebaseAuth.instance.currentUser?.uid;
+      if (uid == null) {
+        throw Exception('No authenticated user');
+      }
+      await _firestore.collection('users').doc(uid).set(userData.toMap());
       _userData = userData;
       notifyListeners();
     } catch (e) {
@@ -24,7 +26,8 @@ class UserProvider with ChangeNotifier {
 
   Future<void> getUser(String uid) async {
     try {
-      DocumentSnapshot doc = await _firestore.collection('users').doc(uid).get();
+      DocumentSnapshot doc =
+          await _firestore.collection('users').doc(uid).get();
       _userData = UserData.fromMap(doc.data() as Map<String, dynamic>);
       notifyListeners();
     } catch (e) {
@@ -35,10 +38,11 @@ class UserProvider with ChangeNotifier {
 
   Future<void> updateUser(UserData userData) async {
     try {
-      await _firestore
-          .collection('users')
-          .doc(userData.uid)
-          .update(userData.toMap());
+      final String? uid = FirebaseAuth.instance.currentUser?.uid;
+      if (uid == null) {
+        throw Exception('No authenticated user');
+      }
+      await _firestore.collection('users').doc(uid).update(userData.toMap());
       _userData = userData;
       notifyListeners();
     } catch (e) {

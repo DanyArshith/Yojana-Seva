@@ -57,7 +57,8 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    final args = ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, String>;
     final aadhaarNumber = args['aadhaarNumber']!;
     final rationCardNumber = args['rationCardNumber']!;
 
@@ -87,14 +88,16 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                 ),
                 TextFormField(
                   controller: _fatherHusbandNameController,
-                  decoration: const InputDecoration(labelText: 'Father/Husband Name'),
+                  decoration:
+                      const InputDecoration(labelText: 'Father/Husband Name'),
                   validator: (value) =>
                       value!.isEmpty ? 'Please enter the name' : null,
                 ),
-                 ListTile(
+                ListTile(
                   title: Text(_dateOfBirth == null
                       ? 'Select Date of Birth'
-                      : 'Date of Birth: ${_dateOfBirth!.toLocal()}'.split(' ')[0]),
+                      : 'Date of Birth: ${_dateOfBirth!.toLocal()}'
+                          .split(' ')[0]),
                   trailing: const Icon(Icons.calendar_today),
                   onTap: () => _selectDate(context),
                 ),
@@ -149,7 +152,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                   validator: (value) =>
                       value!.isEmpty ? 'Please enter your occupation' : null,
                 ),
-                 TextFormField(
+                TextFormField(
                   controller: _annualIncomeController,
                   decoration: const InputDecoration(labelText: 'Annual Income'),
                   keyboardType: TextInputType.number,
@@ -158,10 +161,12 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                 ),
                 TextFormField(
                   controller: _totalFamilyMembersController,
-                  decoration: const InputDecoration(labelText: 'Total Family Members'),
+                  decoration:
+                      const InputDecoration(labelText: 'Total Family Members'),
                   keyboardType: TextInputType.number,
-                  validator: (value) =>
-                      value!.isEmpty ? 'Please enter the number of family members' : null,
+                  validator: (value) => value!.isEmpty
+                      ? 'Please enter the number of family members'
+                      : null,
                 ),
                 TextFormField(
                   controller: _addressController,
@@ -192,23 +197,23 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                     if (_formKey.currentState!.validate()) {
                       final user = authProvider.user!;
                       final userData = UserData(
-                        uid: user.uid,
                         aadhaarNumber: aadhaarNumber,
                         rationCardNumber: rationCardNumber,
                         name: _nameController.text,
-                        surname: _surnameController.text,
                         fatherHusbandName: _fatherHusbandNameController.text,
                         dateOfBirth: _dateOfBirth!,
                         gender: _gender!,
                         religion: _religion!,
                         caste: _caste!,
                         occupation: _occupationController.text,
-                        annualIncome: int.parse(_annualIncomeController.text),
+                        annualIncome:
+                            double.parse(_annualIncomeController.text),
                         totalFamilyMembers:
                             int.parse(_totalFamilyMembersController.text),
                         address: _addressController.text,
-                        isBpl: _isBpl,
+                        isBPL: _isBpl, // <- required param name
                         hasBankAccount: _hasBankAccount,
+                        detailsSubmitted: true,
                       );
                       await userProvider.createUser(userData);
                       Navigator.pushNamed(context, '/success');

@@ -17,7 +17,6 @@ class _MyDetailsScreenState extends State<MyDetailsScreen> {
 
   // Controllers for editing
   final _nameController = TextEditingController();
-  final _surnameController = TextEditingController();
   final _fatherHusbandNameController = TextEditingController();
   final _occupationController = TextEditingController();
   final _annualIncomeController = TextEditingController();
@@ -41,7 +40,6 @@ class _MyDetailsScreenState extends State<MyDetailsScreen> {
         if (userData != null) {
           // Initialize controllers with existing data
           _nameController.text = userData.name;
-          _surnameController.text = userData.surname;
           _fatherHusbandNameController.text = userData.fatherHusbandName;
           _dateOfBirth = userData.dateOfBirth;
           _gender = userData.gender;
@@ -49,9 +47,10 @@ class _MyDetailsScreenState extends State<MyDetailsScreen> {
           _caste = userData.caste;
           _occupationController.text = userData.occupation;
           _annualIncomeController.text = userData.annualIncome.toString();
-          _totalFamilyMembersController.text = userData.totalFamilyMembers.toString();
+          _totalFamilyMembersController.text =
+              userData.totalFamilyMembers.toString();
           _addressController.text = userData.address;
-          _isBpl = userData.isBpl;
+          _isBpl = userData.isBPL;
           _hasBankAccount = userData.hasBankAccount;
         }
       });
@@ -61,7 +60,6 @@ class _MyDetailsScreenState extends State<MyDetailsScreen> {
   @override
   void dispose() {
     _nameController.dispose();
-    _surnameController.dispose();
     _fatherHusbandNameController.dispose();
     _occupationController.dispose();
     _annualIncomeController.dispose();
@@ -104,21 +102,42 @@ class _MyDetailsScreenState extends State<MyDetailsScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildInfoRow('Aadhaar', userData.aadhaarNumber, isEditable: false),
-                        _buildInfoRow('Ration Card', userData.rationCardNumber, isEditable: false),
+                        _buildInfoRow('Aadhaar', userData.aadhaarNumber,
+                            isEditable: false),
+                        _buildInfoRow('Ration Card', userData.rationCardNumber,
+                            isEditable: false),
                         _buildEditableInfoRow('Name', _nameController),
-                        _buildEditableInfoRow('Surname', _surnameController),
-                        _buildEditableInfoRow('Father/Husband Name', _fatherHusbandNameController),
+                        _buildEditableInfoRow('Father/Husband Name',
+                            _fatherHusbandNameController),
                         _buildDateRow('Date of Birth', _dateOfBirth),
-                        _buildDropdownRow('Gender', _gender, ['Male', 'Female', 'Other'], (val) => setState(() => _gender = val)),
-                        _buildDropdownRow('Religion', _religion, ['Hindu', 'Muslim', 'Christian', 'Sikh', 'Other'], (val) => setState(() => _religion = val)),
-                        _buildDropdownRow('Caste', _caste, ['OC', 'BC', 'MBC', 'SC', 'ST'], (val) => setState(() => _caste = val)),
-                        _buildEditableInfoRow('Occupation', _occupationController),
-                        _buildEditableInfoRow('Annual Income', _annualIncomeController, keyboardType: TextInputType.number),
-                        _buildEditableInfoRow('Total Family Members', _totalFamilyMembersController, keyboardType: TextInputType.number),
+                        _buildDropdownRow(
+                            'Gender',
+                            _gender,
+                            ['Male', 'Female', 'Other'],
+                            (val) => setState(() => _gender = val)),
+                        _buildDropdownRow(
+                            'Religion',
+                            _religion,
+                            ['Hindu', 'Muslim', 'Christian', 'Sikh', 'Other'],
+                            (val) => setState(() => _religion = val)),
+                        _buildDropdownRow(
+                            'Caste',
+                            _caste,
+                            ['OC', 'BC', 'MBC', 'SC', 'ST'],
+                            (val) => setState(() => _caste = val)),
+                        _buildEditableInfoRow(
+                            'Occupation', _occupationController),
+                        _buildEditableInfoRow(
+                            'Annual Income', _annualIncomeController,
+                            keyboardType: TextInputType.number),
+                        _buildEditableInfoRow('Total Family Members',
+                            _totalFamilyMembersController,
+                            keyboardType: TextInputType.number),
                         _buildEditableInfoRow('Address', _addressController),
-                        _buildSwitchTile('BPL', _isBpl, (val) => setState(() => _isBpl = val)),
-                        _buildSwitchTile('Bank Account', _hasBankAccount, (val) => setState(() => _hasBankAccount = val)),
+                        _buildSwitchTile('BPL', _isBpl,
+                            (val) => setState(() => _isBpl = val)),
+                        _buildSwitchTile('Bank Account', _hasBankAccount,
+                            (val) => setState(() => _hasBankAccount = val)),
                         const SizedBox(height: 24),
                         _buildButtons(context, userData),
                       ],
@@ -133,7 +152,8 @@ class _MyDetailsScreenState extends State<MyDetailsScreen> {
     );
   }
 
-  Widget _buildEditableInfoRow(String label, TextEditingController controller, {TextInputType keyboardType = TextInputType.text}) {
+  Widget _buildEditableInfoRow(String label, TextEditingController controller,
+      {TextInputType keyboardType = TextInputType.text}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
@@ -163,10 +183,11 @@ class _MyDetailsScreenState extends State<MyDetailsScreen> {
       ),
     );
   }
-  
+
   Widget _buildDateRow(String label, DateTime? date) {
     return ListTile(
-      title: Text(date == null ? 'Select Date' : '${date.toLocal()}'.split(' ')[0]),
+      title: Text(
+          date == null ? 'Select Date' : '${date.toLocal()}'.split(' ')[0]),
       trailing: const Icon(Icons.calendar_today),
       onTap: _isEditing ? () => _selectDate(context) : null,
     );
@@ -186,19 +207,23 @@ class _MyDetailsScreenState extends State<MyDetailsScreen> {
     }
   }
 
-  Widget _buildDropdownRow(String label, String? value, List<String> items, ValueChanged<String?> onChanged) {
+  Widget _buildDropdownRow(String label, String? value, List<String> items,
+      ValueChanged<String?> onChanged) {
     return DropdownButtonFormField<String>(
       value: value,
       decoration: InputDecoration(labelText: label),
-      items: items.map((label) => DropdownMenuItem(
-        child: Text(label),
-        value: label,
-      )).toList(),
+      items: items
+          .map((label) => DropdownMenuItem(
+                child: Text(label),
+                value: label,
+              ))
+          .toList(),
       onChanged: _isEditing ? onChanged : null,
     );
   }
 
-  Widget _buildSwitchTile(String title, bool value, ValueChanged<bool> onChanged) {
+  Widget _buildSwitchTile(
+      String title, bool value, ValueChanged<bool> onChanged) {
     return SwitchListTile(
       title: Text(title),
       value: value,
@@ -234,22 +259,21 @@ class _MyDetailsScreenState extends State<MyDetailsScreen> {
     if (_formKey.currentState!.validate()) {
       final userProvider = Provider.of<UserProvider>(context, listen: false);
       final updatedUserData = UserData(
-        uid: oldUserData.uid,
-        aadhaarNumber: oldUserData.aadhaarNumber, // Not editable
-        rationCardNumber: oldUserData.rationCardNumber, // Not editable
+        aadhaarNumber: oldUserData.aadhaarNumber,
+        rationCardNumber: oldUserData.rationCardNumber,
         name: _nameController.text,
-        surname: _surnameController.text,
         fatherHusbandName: _fatherHusbandNameController.text,
         dateOfBirth: _dateOfBirth!,
         gender: _gender!,
         religion: _religion!,
         caste: _caste!,
         occupation: _occupationController.text,
-        annualIncome: int.parse(_annualIncomeController.text),
+        annualIncome: double.parse(_annualIncomeController.text),
         totalFamilyMembers: int.parse(_totalFamilyMembersController.text),
         address: _addressController.text,
-        isBpl: _isBpl,
+        isBPL: _isBpl,
         hasBankAccount: _hasBankAccount,
+        detailsSubmitted: true,
       );
       userProvider.updateUser(updatedUserData).then((_) {
         setState(() {
@@ -268,7 +292,8 @@ class _MyDetailsScreenState extends State<MyDetailsScreen> {
       builder: (BuildContext ctx) {
         return AlertDialog(
           title: const Text('Confirm Delete'),
-          content: const Text('Are you sure you want to delete your data? This action cannot be undone.'),
+          content: const Text(
+              'Are you sure you want to delete your data? This action cannot be undone.'),
           actions: <Widget>[
             TextButton(
               child: const Text('Cancel'),
@@ -279,12 +304,15 @@ class _MyDetailsScreenState extends State<MyDetailsScreen> {
             TextButton(
               child: const Text('Delete'),
               onPressed: () {
-                final userProvider = Provider.of<UserProvider>(context, listen: false);
-                final authProvider = Provider.of<AuthProvider>(context, listen: false);
+                final userProvider =
+                    Provider.of<UserProvider>(context, listen: false);
+                final authProvider =
+                    Provider.of<AuthProvider>(context, listen: false);
                 userProvider.deleteUser(authProvider.user!.uid).then((_) {
                   authProvider.signOut();
                   Navigator.of(ctx).pop(); // Close the dialog
-                  Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      '/', (Route<dynamic> route) => false);
                 });
               },
             ),

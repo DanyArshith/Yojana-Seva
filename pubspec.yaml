@@ -1,22 +1,28 @@
 name: yojana_seva
-description: A new Flutter project.
+description: A Flutter app that helps users discover government schemes.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.19.6 <3.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
-  firebase_core: ^2.32.0
-  cloud_firestore: ^4.17.5
-  firebase_auth: ^4.16.0
-  lottie: ^3.1.2
-  provider: ^6.1.2
 
+  # 🔥 Firebase & Google packages (latest and stable)
+  firebase_core: ^3.6.0
+  firebase_auth: ^5.3.0
+  cloud_firestore: ^5.4.4
+  google_sign_in: ^6.2.1
+
+  # 🌐 Other essential packages
+  provider: ^6.1.2
+  url_launcher: ^6.3.1
+  lottie: ^3.1.2
+  cupertino_icons: ^1.0.8
 
 dev_dependencies:
   flutter_test:
@@ -25,5 +31,4 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  assets:
-    - assets/
+
